@@ -24,6 +24,7 @@ function html2canvas(nodeList, options) {
     options.allowTaint = typeof(options.allowTaint) === "undefined" ? false : options.allowTaint;
     options.removeContainer = typeof(options.removeContainer) === "undefined" ? true : options.removeContainer;
     options.javascriptEnabled = typeof(options.javascriptEnabled) === "undefined" ? false : options.javascriptEnabled;
+    options.nodeIgnore = typeof(options.nodeIgnore) === "undefined" ? function(){ return true; } : options.nodeIgnore;
     options.imageTimeout = typeof(options.imageTimeout) === "undefined" ? 10000 : options.imageTimeout;
     options.renderer = typeof(options.renderer) === "function" ? options.renderer : CanvasRenderer;
     options.strict = !!options.strict;

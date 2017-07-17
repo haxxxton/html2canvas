@@ -1,5 +1,5 @@
 /*
-  html2canvas 0.5.3 <http://html2canvas.hertzen.com>
+  html2canvas 0.5.4 <http://html2canvas.hertzen.com>
   Copyright (c) 2017 Niklas von Hertzen
 
   Released under  License
@@ -563,13 +563,13 @@ function cloneCanvasContents(canvas, clonedCanvas) {
     }
 }
 
-function cloneNode(node, javascriptEnabled) {
+function cloneNode(node, javascriptEnabled, nodeIgnore) {
     var clone = node.nodeType === 3 ? document.createTextNode(node.nodeValue) : node.cloneNode(false);
 
     var child = node.firstChild;
     while(child) {
-        if (javascriptEnabled === true || child.nodeType !== 1 || child.nodeName !== 'SCRIPT') {
-            clone.appendChild(cloneNode(child, javascriptEnabled));
+        if (nodeIgnore() && (javascriptEnabled === true || child.nodeType !== 1 || child.nodeName !== 'SCRIPT')) {
+            clone.appendChild(cloneNode(child, javascriptEnabled, nodeIgnore));
         }
         child = child.nextSibling;
     }
@@ -601,7 +601,7 @@ function initNode(node) {
 }
 
 module.exports = function(ownerDocument, containerDocument, width, height, options, x ,y) {
-    var documentElement = cloneNode(ownerDocument.documentElement, options.javascriptEnabled);
+    var documentElement = cloneNode(ownerDocument.documentElement, options.javascriptEnabled, options.nodeIgnore);
     var container = containerDocument.createElement("iframe");
 
     container.className = "html2canvas-container";
@@ -949,6 +949,7 @@ function html2canvas(nodeList, options) {
     options.allowTaint = typeof(options.allowTaint) === "undefined" ? false : options.allowTaint;
     options.removeContainer = typeof(options.removeContainer) === "undefined" ? true : options.removeContainer;
     options.javascriptEnabled = typeof(options.javascriptEnabled) === "undefined" ? false : options.javascriptEnabled;
+    options.nodeIgnore = typeof(options.nodeIgnore) === "undefined" ? function(){ return true; } : options.nodeIgnore;
     options.imageTimeout = typeof(options.imageTimeout) === "undefined" ? 10000 : options.imageTimeout;
     options.renderer = typeof(options.renderer) === "function" ? options.renderer : CanvasRenderer;
     options.strict = !!options.strict;
@@ -1601,7 +1602,7 @@ NodeContainer.prototype.prefixedCss = function(attribute) {
 };
 
 NodeContainer.prototype.computedStyle = function(type) {
-	if (this.node instanceof Element) {
+	if (this.node.nodeType !== 3) {
     	return this.node.ownerDocument.defaultView.getComputedStyle(this.node, type);
     }
     return this.node.ownerDocument.defaultView.getComputedStyle(window.document.createElement('div'), type);
