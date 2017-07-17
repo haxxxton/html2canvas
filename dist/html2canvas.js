@@ -1,5 +1,5 @@
 /*
-  html2canvas 0.5.4 <http://html2canvas.hertzen.com>
+  html2canvas 0.5.5 <http://html2canvas.hertzen.com>
   Copyright (c) 2017 Niklas von Hertzen
 
   Released under  License
@@ -568,7 +568,7 @@ function cloneNode(node, javascriptEnabled, nodeIgnore) {
 
     var child = node.firstChild;
     while(child) {
-        if (nodeIgnore() && (javascriptEnabled === true || child.nodeType !== 1 || child.nodeName !== 'SCRIPT')) {
+        if (nodeIgnore(child) && (javascriptEnabled === true || child.nodeType !== 1 || child.nodeName !== 'SCRIPT')) {
             clone.appendChild(cloneNode(child, javascriptEnabled, nodeIgnore));
         }
         child = child.nextSibling;

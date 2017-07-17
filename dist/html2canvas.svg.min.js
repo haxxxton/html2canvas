@@ -1,5 +1,5 @@
 /*
-  html2canvas 0.5.4 <http://html2canvas.hertzen.com>
+  html2canvas 0.5.5 <http://html2canvas.hertzen.com>
   Copyright (c) 2017 Niklas von Hertzen
 
   Released under  License

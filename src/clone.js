@@ -23,7 +23,7 @@ function cloneNode(node, javascriptEnabled, nodeIgnore) {
 
     var child = node.firstChild;
     while(child) {
-        if (nodeIgnore() && (javascriptEnabled === true || child.nodeType !== 1 || child.nodeName !== 'SCRIPT')) {
+        if (nodeIgnore(child) && (javascriptEnabled === true || child.nodeType !== 1 || child.nodeName !== 'SCRIPT')) {
             clone.appendChild(cloneNode(child, javascriptEnabled, nodeIgnore));
         }
         child = child.nextSibling;
