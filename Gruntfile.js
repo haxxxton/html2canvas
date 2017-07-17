@@ -5,7 +5,7 @@ var proxy = require('html2canvas-proxy');
 module.exports = function(grunt) {
 
     var meta = {
-        banner: '/*\n  <%= pkg.title || pkg.name %> <%= pkg.version %>' +
+        banner: '/*\n  html2canvas <%= pkg.version %>' +
             '<%= pkg.homepage ? " <" + pkg.homepage + ">" : "" %>' + '\n' +
             '  Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>' +
             '\n\n  Released under <%= _.pluck(pkg.licenses, "type").join(", ") %> License\n*/\n'
@@ -50,7 +50,7 @@ module.exports = function(grunt) {
         browserify: {
             dist: {
                 src: ['src/core.js'],
-                dest: 'dist/<%= pkg.name %>.js',
+                dest: 'dist/html2canvas.js',
                 options: {
                     browserifyOptions: {
                         standalone: 'html2canvas'
@@ -65,7 +65,7 @@ module.exports = function(grunt) {
                 src: [
                     'src/fabric/dist/fabric.js'
                 ],
-                dest: 'dist/<%= pkg.name %>.svg.js',
+                dest: 'dist/html2canvas.svg.js',
                 options:{
                     browserifyOptions: {
                         standalone: 'html2canvas.svg'
@@ -145,11 +145,11 @@ module.exports = function(grunt) {
         uglify: {
             dist: {
                 src: ['<%= browserify.dist.dest %>'],
-                dest: 'dist/<%= pkg.name %>.min.js'
+                dest: 'dist/html2canvas.min.js'
             },
             svg: {
                 src: ['<%= browserify.svg.dest %>'],
-                dest: 'dist/<%= pkg.name %>.svg.min.js'
+                dest: 'dist/html2canvas.svg.min.js'
             },
             options: {
                 banner: meta.banner
