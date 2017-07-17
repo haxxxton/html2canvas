@@ -75,7 +75,10 @@ NodeContainer.prototype.prefixedCss = function(attribute) {
 };
 
 NodeContainer.prototype.computedStyle = function(type) {
-    return this.node.ownerDocument.defaultView.getComputedStyle(this.node, type);
+	if (this.node instanceof Element) {
+    	return this.node.ownerDocument.defaultView.getComputedStyle(this.node, type);
+    }
+    return this.node.ownerDocument.defaultView.getComputedStyle(window.document.createElement('div'), type);
 };
 
 NodeContainer.prototype.cssInt = function(attribute) {

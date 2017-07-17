@@ -1,5 +1,5 @@
 /*
-  html2canvas 0.5.2 <http://html2canvas.hertzen.com>
+  html2canvas 0.5.3 <http://html2canvas.hertzen.com>
   Copyright (c) 2017 Niklas von Hertzen
 
   Released under  License
@@ -1601,7 +1601,10 @@ NodeContainer.prototype.prefixedCss = function(attribute) {
 };
 
 NodeContainer.prototype.computedStyle = function(type) {
-    return this.node.ownerDocument.defaultView.getComputedStyle(this.node, type);
+	if (this.node instanceof Element) {
+    	return this.node.ownerDocument.defaultView.getComputedStyle(this.node, type);
+    }
+    return this.node.ownerDocument.defaultView.getComputedStyle(window.document.createElement('div'), type);
 };
 
 NodeContainer.prototype.cssInt = function(attribute) {
@@ -3109,14 +3112,16 @@ CanvasRenderer.prototype.shadow = function(shape, shadows) {
         return info;
     };
     var drawShadow = function(shadow) {
-        var info = parseShadow(shadow);
-        if (!info.inset) {
-            context.shadowOffsetX = info.x;
-            context.shadowOffsetY = info.y;
-            context.shadowColor = info.color;
-            context.shadowBlur = info.blur;
-            context.fill();
-        }
+    	if (shadow !== "") {
+	        var info = parseShadow(shadow);
+	        if (!info.inset) {
+	            context.shadowOffsetX = info.x;
+	            context.shadowOffsetY = info.y;
+	            context.shadowColor = info.color;
+	            context.shadowBlur = info.blur;
+	            context.fill();
+	        }
+	    }
     };
     var context = this.setFillStyle('white');
     context.save();

@@ -57,14 +57,16 @@ CanvasRenderer.prototype.shadow = function(shape, shadows) {
         return info;
     };
     var drawShadow = function(shadow) {
-        var info = parseShadow(shadow);
-        if (!info.inset) {
-            context.shadowOffsetX = info.x;
-            context.shadowOffsetY = info.y;
-            context.shadowColor = info.color;
-            context.shadowBlur = info.blur;
-            context.fill();
-        }
+    	if (shadow !== "") {
+	        var info = parseShadow(shadow);
+	        if (!info.inset) {
+	            context.shadowOffsetX = info.x;
+	            context.shadowOffsetY = info.y;
+	            context.shadowColor = info.color;
+	            context.shadowBlur = info.blur;
+	            context.fill();
+	        }
+	    }
     };
     var context = this.setFillStyle('white');
     context.save();
