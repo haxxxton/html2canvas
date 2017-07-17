@@ -461,7 +461,7 @@ NodeParser.prototype.paintText = function(container) {
                 this.renderTextDecoration(container.parent, bounds, this.fontMetrics.getMetrics(family, size));
             }
         }, this);
-    }, this, container);
+    }, this, container.parent);
 };
 
 NodeParser.prototype.renderTextDecoration = function(container, bounds, metrics) {
